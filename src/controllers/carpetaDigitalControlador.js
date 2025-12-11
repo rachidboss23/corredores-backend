@@ -1,0 +1,29 @@
+// backend/src/controllers/carpetaDigitalControlador.js
+
+const {
+  obtenerCarpetaDigitalServicio,
+} = require("../services/carpetaDigitalServicio");
+
+async function obtenerCarpetaDigital(req, res) {
+  const { propiedad_id } = req.params;
+
+  try {
+    const data = await obtenerCarpetaDigitalServicio(propiedad_id);
+
+    return res.json({
+      ok: true,
+      ...data,
+    });
+  } catch (error) {
+    console.error("Error en carpeta digital:", error.message);
+
+    return res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+}
+
+module.exports = {
+  obtenerCarpetaDigital,
+};
