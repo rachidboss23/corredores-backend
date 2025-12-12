@@ -11,6 +11,12 @@ router.get("/test", (req, res) =>
 );
 
 // Carpeta digital real
+// Log middleware para confirmar que la ruta fue alcanzada
+router.use((req, res, next) => {
+  if (req.path && req.path !== "/test") console.log("ROUTE /api/carpeta-digital hit:", req.method, req.path);
+  next();
+});
+
 router.get("/:propiedad_id", obtenerCarpetaDigital);
 
 module.exports = router;
