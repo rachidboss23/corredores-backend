@@ -20,6 +20,9 @@ async function obtenerCarpetaDigitalServicio(propiedad_id) {
       .eq("id", propiedad_id)
       .maybeSingle();
 
+    // Log para diagnóstico: mostrar la forma de la respuesta
+    console.log("DEBUG: supabase resp for propiedad:", JSON.stringify(resp));
+
     // resp puede ser { data, error } o el thenable resultado; normalizamos
     propiedad = resp?.data ?? resp;
     if (resp?.error) {
