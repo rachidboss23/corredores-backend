@@ -30,3 +30,9 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en puerto ${PORT}`);
 });
+
+// Error handler (global) — log errores no capturados en rutas
+app.use((err, req, res, next) => {
+  console.error('GLOBAL ERROR HANDLER:', err && (err.stack || err));
+  next(err);
+});
