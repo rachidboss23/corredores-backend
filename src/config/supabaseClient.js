@@ -6,12 +6,13 @@ const { createClient } = require("@supabase/supabase-js");
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Si faltan variables críticas, en lugar de romper el proceso exportamos
-// un cliente mock que devuelve datos de ejemplo para permitir ejecutar
-// la app localmente sin conexión a Supabase real. En producción usa credenciales.
+// Decidir si usamos el cliente real o un mock.
+// Por seguridad y para desarrollo local, usamos el mock a menos que
+// la variable de entorno `USE_REAL_SUPABASE` esté establecida a 'true'.
 const isPlaceholderKey = !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || SUPABASE_SERVICE_ROLE_KEY === "REPLACE_WITH_YOUR_SERVICE_ROLE_KEY";
+const useReal = process.env.USE_REAL_SUPABASE === "true" && !isPlaceholderKey;
 
-if (!isPlaceholderKey) {
+if (useReal) {
   // Cliente real
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
   module.exports = supabase;
