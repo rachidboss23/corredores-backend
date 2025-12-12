@@ -2,30 +2,13 @@
 require("dotenv").config();
 const { createClient } = require("@supabase/supabase-js");
 
-<<<<<<< HEAD
-// URL y KEY desde .env
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-// Validación
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error("❌ ERROR: Variables de entorno Supabase no cargadas");
-}
-
-// Crear cliente Supabase (FORMATO COMMONJS CORRECTO)
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
-// Exportarlo correctamente para require()
-module.exports = supabase;
-=======
 // Leer variables de entorno
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Si faltan variables críticas, en lugar de romper el proceso exportamos
 // un cliente mock que devuelve datos de ejemplo para permitir ejecutar
-// la app localmente sin conexión a Supabase real. Esto facilita el
-// desarrollo y las pruebas; en producción debes usar credenciales reales.
+// la app localmente sin conexión a Supabase real. En producción usa credenciales.
 const isPlaceholderKey = !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || SUPABASE_SERVICE_ROLE_KEY === "REPLACE_WITH_YOUR_SERVICE_ROLE_KEY";
 
 if (!isPlaceholderKey) {
@@ -92,4 +75,3 @@ if (!isPlaceholderKey) {
 
   module.exports = mockSupabase;
 }
->>>>>>> 2459c4b (carpeta digital funcionando al 100)
