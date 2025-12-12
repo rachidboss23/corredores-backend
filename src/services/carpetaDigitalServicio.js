@@ -12,13 +12,25 @@ const { listarTiposDocumentoServicio } = require("./tiposDocumentoServicio");
  */
 async function obtenerCarpetaDigitalServicio(propiedad_id) {
   // 1) Propiedad
-  const { data: propiedad, error: errorProp } = await supabase
-    .from("propiedades")
-    .select("id, titulo, tipo_operacion, precio, direccion")
-    .eq("id", propiedad_id)
-    .maybeSingle();
+  let propiedad;
+  try {
+    const resp = await supabase
+      .from("propiedades")
+      .select("id, titulo, tipo_operacion, precio, direccion")
+      .eq("id", propiedad_id)
+      .maybeSingle();
 
-  if (errorProp) throw new Error("Error obteniendo propiedad");
+    // resp puede ser { data, error } o el thenable resultado; normalizamos
+    propiedad = resp?.data ?? resp;
+    if (resp?.error) {
+      console.error("supabase error fetching propiedad:", resp.error);
+      throw new Error("Error obteniendo propiedad");
+    }
+  } catch (e) {
+    console.error("Exception fetching propiedad:", e);
+    throw new Error("Error obteniendo propiedad");
+  }
+
   if (!propiedad) throw new Error("Propiedad no encontrada");
 
   // 2) Tipos documento (sin filtrar por tipo_operacion para evitar errores si la columna no existe)
