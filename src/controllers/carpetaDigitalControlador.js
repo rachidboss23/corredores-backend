@@ -12,6 +12,14 @@ async function obtenerCarpetaDigital(req, res) {
     console.error("Error en carpeta digital:", error?.message || error);
 
     // Fallback safety: si Supabase real falla, devolver datos de ejemplo
+    try {
+      const fs = require('fs');
+      fs.mkdirSync('logs', { recursive: true });
+      fs.appendFileSync('logs/carpeta_controller.log', `\n[CONT_ERR] ${new Date().toISOString()} - ${error && (error.stack || error.message || error)}\n`);
+    } catch (e) {
+      console.error('No se pudo escribir log de controlador:', e);
+    }
+
     const fallback = {
       propiedad: { id: propiedad_id || "demo", titulo: "Propiedad demo", tipo_operacion: "Venta", direccion: "Dirección de ejemplo", precio: null },
       checklist: [

@@ -8,6 +8,7 @@ const propiedadesRutas = require("./src/routes/propiedadesRutas");
 const tiposDocumentoRutas = require("./src/routes/tiposDocumentoRutas");
 const clientesRutas = require("./src/routes/clientesRutas");
 const documentosRutas = require("./src/routes/documentosRutas");
+const dashboardRutas = require("./src/routes/dashboardRutas");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/propiedades", propiedadesRutas);
 app.use("/api/tipos-documento", tiposDocumentoRutas);
 app.use("/api/clientes", clientesRutas);
 app.use("/api/documentos", documentosRutas);
+app.use("/api/dashboard", dashboardRutas);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
